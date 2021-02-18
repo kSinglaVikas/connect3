@@ -3,7 +3,8 @@
     <string name="appCentreSecret" tools:ignore="TypographyDashes">e3f5ca76-200b-4b00-a38d-aa82a4029fa8</string>
     <string name="default_tv">TextView</string>
     <string name="play_again">Play Again!!!</string>
-    <string name="redTurn">It\'s Red Turn</string>
+    <string name="redTurn">It\'s Red Turn now</string>
     <string name="yellowTurn">It\'s Yellow Turn now</string>
+    <string name="yellowToStart">Yellow to start the game</string>
     <string name="gameFinished">Game is finished</string>
 </resources>
