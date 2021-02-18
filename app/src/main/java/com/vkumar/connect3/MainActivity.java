@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 public class MainActivity extends AppCompatActivity {
 
     //Active Player - Yellow(0) Red (1) Blank = 2
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCenter.start(getApplication(), getString(R.string.appCentreSecret),
+                Analytics.class, Crashes.class);
         setContentView(R.layout.activity_main);
     }
 }
