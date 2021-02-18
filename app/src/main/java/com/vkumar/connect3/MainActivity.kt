@@ -14,20 +14,22 @@ class MainActivity : AppCompatActivity() {
     private var activePlayer = 0
     private var gameState = intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2)
     private val winningPositions = arrayOf(intArrayOf(0, 1, 2), intArrayOf(3, 4, 5), intArrayOf(6, 7, 8), intArrayOf(0, 3, 6), intArrayOf(1, 4, 7), intArrayOf(2, 5, 8), intArrayOf(0, 4, 8), intArrayOf(2, 4, 6))
+    private var activeGame = true
+
     fun dropIn(view: View) {
         val gameStatus = findViewById<View>(R.id.tv_gameStatus) as TextView
         val counter = view as ImageView
         val tagged = counter.tag.toString().toInt() - 1
-        if (gameState[tagged] == 2) {
+        if (gameState[tagged] == 2 && activeGame) {
             gameState[tagged] = activePlayer
             counter.translationY = -1000f
             activePlayer = if (activePlayer == 0) {
                 counter.setImageResource(R.drawable.yellow)
-                gameStatus.text = "It's Red Turn"
+                gameStatus.text = getString(R.string.redTurn)
                 1
             } else {
                 counter.setImageResource(R.drawable.red)
-                gameStatus.text = "It's Yellow Turn now"
+                gameStatus.text = getString(R.string.yellowTurn)
                 0
             }
             counter.animate().translationYBy(1000f).duration = 300
@@ -39,21 +41,27 @@ class MainActivity : AppCompatActivity() {
                     if (gameState[winningPosition[0]] == 0) {
                         winner = "Yellow"
                     }
+                    activeGame = false
                     winnerMessage.text = String.format("Player %s has WON!!!", winner)
-                    gameStatus.text = "Game is finished"
+                    gameStatus.text = getString(R.string.gameFinished)
                     val layout = findViewById<View>(R.id.Layout) as LinearLayout
                     layout.visibility = View.VISIBLE
                 }
             }
             // Check if still can be played
             if (2 !in gameState){
+                activeGame = false
                 winnerMessage.text = String.format("Game is finished in draw !!!")
-                gameStatus.text = "Game is finished"
+                gameStatus.text = getString(R.string.gameFinished)
                 val layout = findViewById<View>(R.id.Layout) as LinearLayout
                 layout.visibility = View.VISIBLE
             }
         } else {
-            Toast.makeText(this@MainActivity, "Block is Already Taken!!!", Toast.LENGTH_LONG).show()
+            if (activeGame) {
+                Toast.makeText(this@MainActivity, "Block is Already Taken!!!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this@MainActivity, "Game is finished. No more moves are allowed", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -64,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         val gameStatus = findViewById<View>(R.id.tv_gameStatus) as TextView
         gameStatus.text = "Yellow to Start"
         activePlayer = 0
+        activeGame = true
         Arrays.fill(gameState, 2)
         val gridLayout = findViewById<View>(R.id.gridLayout) as androidx.gridlayout.widget.GridLayout
         for (i in 0 until gridLayout.childCount) {
