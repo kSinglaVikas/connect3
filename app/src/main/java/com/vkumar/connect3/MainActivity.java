@@ -3,7 +3,6 @@ package com.vkumar.connect3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -13,12 +12,16 @@ import android.widget.Toast;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
+
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     //Active Player - Yellow(0) Red (1) Blank = 2
     int activePlayer = 0;
+    @SuppressWarnings("CanBeFinal")
     int[] gameState = {2,2,2,2,2,2,2,2,2};
-    int[][] winningPositions = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+    final int[][] winningPositions = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
 
     public void dropIn(View view){
         ImageView counter = (ImageView) view;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     if (gameState[winningPosition[0]] == 0){
                         winner = "Yellow";
                     }
-                    winnerMessage.setText("Player " + winner + " has WON!!!");
+                    winnerMessage.setText(String.format("Player %s has WON!!!", winner));
 
                     LinearLayout layout = (LinearLayout)findViewById(R.id.Layout);
                     layout.setVisibility(View.VISIBLE);
@@ -61,9 +64,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout layout = (LinearLayout)findViewById(R.id.Layout);
         layout.setVisibility(View.INVISIBLE);
         activePlayer = 0;
-        for (int i=0;i < gameState.length;i++){
-            gameState[i] = 2;
-        }
+        Arrays.fill(gameState, 2);
 
         GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
 

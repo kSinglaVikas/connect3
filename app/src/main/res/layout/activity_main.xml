@@ -126,14 +126,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            android:text="TextView" />
+            android:text="@string/default_tv" />
 
         <Button
             android:id="@+id/playAgain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="playAgain"
-            android:text="Play Again!!!"
+            android:text="@string/play_again"
             android:textColorLink="#0C0C0C" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
