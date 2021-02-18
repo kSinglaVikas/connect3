@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private var gameState = intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2)
     private val winningPositions = arrayOf(intArrayOf(0, 1, 2), intArrayOf(3, 4, 5), intArrayOf(6, 7, 8), intArrayOf(0, 3, 6), intArrayOf(1, 4, 7), intArrayOf(2, 5, 8), intArrayOf(0, 4, 8), intArrayOf(2, 4, 6))
     fun dropIn(view: View) {
+        val gameStatus = findViewById<View>(R.id.tv_gameStatus) as TextView
         val counter = view as ImageView
         val tagged = counter.tag.toString().toInt() - 1
         if (gameState[tagged] == 2) {
@@ -22,9 +23,11 @@ class MainActivity : AppCompatActivity() {
             counter.translationY = -1000f
             activePlayer = if (activePlayer == 0) {
                 counter.setImageResource(R.drawable.yellow)
+                gameStatus.text = "It's Red Turn"
                 1
             } else {
                 counter.setImageResource(R.drawable.red)
+                gameStatus.text = "It's Yellow Turn now"
                 0
             }
             counter.animate().translationYBy(1000f).duration = 300
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                         winner = "Yellow"
                     }
                     winnerMessage.text = String.format("Player %s has WON!!!", winner)
+                    gameStatus.text = "Game is finished"
                     val layout = findViewById<View>(R.id.Layout) as LinearLayout
                     layout.visibility = View.VISIBLE
                 }
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             // Check if still can be played
             if (2 !in gameState){
                 winnerMessage.text = String.format("Game is finished in draw !!!")
+                gameStatus.text = "Game is finished"
                 val layout = findViewById<View>(R.id.Layout) as LinearLayout
                 layout.visibility = View.VISIBLE
             }
@@ -52,9 +57,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun playAgain(view: View?) {
         val layout = findViewById<View>(R.id.Layout) as LinearLayout
         layout.visibility = View.INVISIBLE
+        val gameStatus = findViewById<View>(R.id.tv_gameStatus) as TextView
+        gameStatus.text = "Yellow to Start"
         activePlayer = 0
         Arrays.fill(gameState, 2)
         val gridLayout = findViewById<View>(R.id.gridLayout) as androidx.gridlayout.widget.GridLayout
