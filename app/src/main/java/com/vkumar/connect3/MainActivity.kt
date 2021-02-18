@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         layout.visibility = View.INVISIBLE
         activePlayer = 0
         Arrays.fill(gameState, 2)
-        val gridLayout = findViewById<View>(R.id.gridLayout) as GridLayout
+        val gridLayout = findViewById<View>(R.id.gridLayout) as androidx.gridlayout.widget.GridLayout
         for (i in 0 until gridLayout.childCount) {
             (gridLayout.getChildAt(i) as ImageView).setImageResource(0)
         }
